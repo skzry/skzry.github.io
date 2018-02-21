@@ -61,8 +61,11 @@ Tumblr <https://skzry.tumblr.com/>
 ## Codes
 <details><summary>Read more.</summary><div>
 
-Please wait a moment.  
+- github     <https://github.com/skzry>
+- dockerhub: <https://hub.docker.com/u/0xpycl/>
 
+ local repo
+- bitbucket: <https://bitbucket.org/skzry/> 
 ---
 </div></details>
 
