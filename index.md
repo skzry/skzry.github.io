@@ -1,5 +1,5 @@
 # skzry
-I'm working as a Red-Team Pentester in tokyo.
+I'm working as a Pentester in tokyo.
 
   
 ## Music  
@@ -32,40 +32,12 @@ Tumblr <https://skzry.tumblr.com/>
 ---
 </div></details>
 
-## Games
-<details><summary>Read more.</summary><div>
-
-#### Fantasy Earth Zero
-- L鯖:ネツ Urban_Hymns  
-- L鯖:ゲブ ウルドゥー語科  
-- L鯖:ゲブ アラビア語科  
-- L鯖:ネツ はなかゆい  
-  
-#### EVE ONLINE  
-- Royyd Eullon  
----
-</div></details>
-
-## Soical media accounts
-<details><summary>Read more.</summary><div>
-
-- Twtter: <https://twitter.com/skzry>
-- Blog:  <http://skzry.hatenablog.com/>
-- github:  <https://github.com/skzry>
-- Tumblr:  <https://skzry.tumblr.com/>
-
-- Email `pyclas[a.t]yandex.ru`
----
-</div></details>
-
 ## Codes
 <details><summary>Read more.</summary><div>
 
 - github     <https://github.com/skzry>
 - dockerhub: <https://hub.docker.com/u/0xpycl/>
 
- local repo
-- bitbucket: <https://bitbucket.org/skzry/> 
 ---
 </div></details>
 
