@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Untitled-1.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: "Segoe WPC", "Segoe UI", "SFUIText-Light", "HelveticaNeue-Light", sans-serif, "Droid Sans Fallback";
+	font-size: 14px;
+	padding: 0 12px;
+	line-height: 22px;
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	color: #4080D0;
+	text-decoration: none;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h1 code,
+h2 code,
+h3 code,
+h4 code,
+h5 code,
+h6 code {
+	font-size: inherit;
+	line-height: auto;
+}
+
+a:hover {
+	color: #4080D0;
+	text-decoration: underline;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left: 5px solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 14px;
+	line-height: 19px;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+.mac code {
+	font-size: 12px;
+	line-height: 18px;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+/** Theming */
+
+.vscode-light,
+.vscode-light pre code {
+	color: rgb(30, 30, 30);
+}
+
+.vscode-dark,
+.vscode-dark pre code {
+	color: #DDD;
+}
+
+.vscode-high-contrast,
+.vscode-high-contrast pre code {
+	color: white;
+}
+
+.vscode-light code {
+	color: #A31515;
+}
+
+.vscode-dark code {
+	color: #D7BA7D;
+}
+
+.vscode-light pre:not(.hljs),
+.vscode-light code > div {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre:not(.hljs),
+.vscode-dark code > div {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre:not(.hljs),
+.vscode-high-contrast code > div {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+.vscode-light blockquote,
+.vscode-dark blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.vscode-high-contrast blockquote {
+	background: transparent;
+	border-color: #fff;
+}
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+</style>
+
+</head>
+<body>
+<h1 id="zzuf%E3%81%A7fuzzing">ZzufでFuzzing</h1>
+<h2 id="1%E8%A4%87%E6%95%B0%E3%81%AE%E3%83%90%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E3%81%AEapache%E3%82%92%E4%B8%80%E6%B0%97%E3%81%AB%E5%BB%BA%E3%81%A6%E3%82%8B">1.複数のバージョンのApacheを一気に建てる</h2>
+<pre class="hljs"><code><div>root@ubuntu:~$ <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {0..34}; <span class="hljs-keyword">do</span> wget http://archive.apache.org/dist/httpd/httpd-2.2.<span class="hljs-variable">${i}</span>.tar.gz;tar xf httpd-2.2.<span class="hljs-variable">${i}</span>.tar.gz; <span class="hljs-built_in">pushd</span> httpd-2.2.<span class="hljs-variable">${i}</span>; ./configure --prefix=/opt/httpd/2.2.<span class="hljs-variable">${i}</span>;make;make install;sed -i <span class="hljs-string">"s/Listen 80/Listen <span class="hljs-variable">$((2000+${i})</span>)/"</span> /opt/httpd/2.2.<span class="hljs-variable">${i}</span>/conf/httpd.conf; <span class="hljs-built_in">echo</span> <span class="hljs-string">"TraceEnable Off"</span> &gt;&gt; /opt/httpd/2.2.<span class="hljs-variable">${i}</span>/conf/httpd.conf; /opt/httpd/2.2.<span class="hljs-variable">${i}</span>/bin/apachectl start; <span class="hljs-built_in">popd</span>; <span class="hljs-keyword">done</span>
+</div></code></pre>
+<pre class="hljs"><code><div>Nmap scan report for localhost (127.0.0.1)
+Host is up (0.0000040s latency).
+Other addresses for localhost (not scanned): ::1
+Not shown: 986 closed ports
+PORT     STATE SERVICE VERSION
+22/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 (Ubuntu Linux; protocol 2.0)
+2000/tcp open  http    Apache httpd 2.2.0 ((Unix))
+2002/tcp open  http    Apache httpd 2.2.2 ((Unix))
+2003/tcp open  http    Apache httpd 2.2.3 ((Unix))
+2004/tcp open  http    Apache httpd 2.2.4 ((Unix))
+2006/tcp open  http    Apache httpd 2.2.6 ((Unix))
+2008/tcp open  http    Apache httpd 2.2.8 ((Unix))
+2009/tcp open  http    Apache httpd 2.2.9 ((Unix))
+2010/tcp open  http    Apache httpd 2.2.10 ((Unix))
+2013/tcp open  http    Apache httpd 2.2.13 ((Unix))
+2020/tcp open  http    Apache httpd 2.2.20 ((Unix))
+2021/tcp open  http    Apache httpd 2.2.21 ((Unix))
+2022/tcp open  http    Apache httpd 2.2.22 ((Unix))
+2034/tcp open  http    Apache httpd 2.2.34 ((Unix))
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 20.11 seconds
+</div></code></pre>
+<h2 id="2wikipedia%E3%81%AEhttpheader%E3%81%8B%E3%82%89http%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E3%81%AE%E3%83%AA%E3%82%B9%E3%83%88%E3%82%92%E3%82%B3%E3%83%94%E3%83%9A%E3%81%97%E3%81%A6%E3%80%81%E8%B2%BC%E3%82%8A%E4%BB%98%E3%81%91%E3%82%8B">2.WikipediaのHTTPheaderからHTTPヘッダーのリストをコピペして、貼り付ける</h2>
+<pre class="hljs"><code><div>root@ubuntu:~$ cat &lt;&lt; EOF &gt; wiki-http-headers
+</div></code></pre>
+<h2 id="3%E8%A6%81%E3%82%89%E3%81%AA%E3%81%84%E8%A7%A3%E8%AA%AC%E3%81%A8%E3%81%8B%E3%82%92%E6%B6%88%E3%81%99">3.要らない解説とかを消す</h2>
+<pre class="hljs"><code><div>root@ubuntu:~$ cat wiki-http-headers | cut -f3 | grep <span class="hljs-string">":"</span> | sed <span class="hljs-string">"s#Example....##g"</span> | sort -u
+</div></code></pre>
+<h2 id="4%E3%83%98%E3%83%83%E3%83%80%E3%83%BC%E4%B8%80%E8%A6%A7%E3%81%8B%E3%82%89%E3%80%81%E5%AE%9F%E9%9A%9B%E3%81%AB%E5%8B%95%E3%81%8Fhttp%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%82%92%E7%B5%84%E3%81%BF%E7%AB%8B%E3%81%A6%E3%82%8B">4.ヘッダー一覧から、実際に動くHTTPリクエストを組み立てる</h2>
+<pre class="hljs"><code><div>root@ubuntu:~$ a=0 &amp;&amp; IFS=$<span class="hljs-string">'\n'</span> &amp;&amp; <span class="hljs-keyword">for</span> header <span class="hljs-keyword">in</span> $(cat wiki-http-headers | cut -f3 | grep <span class="hljs-string">":"</span> | sort -u); <span class="hljs-keyword">do</span> <span class="hljs-built_in">echo</span> -e <span class="hljs-string">"GET / HTTP/1.0\r\n<span class="hljs-variable">$header</span>\r\n\r\n"</span> &gt; <span class="hljs-string">"testcase<span class="hljs-variable">$a</span>.req"</span>;a=$((<span class="hljs-variable">$a</span>+1)); <span class="hljs-keyword">done</span> &amp;&amp; <span class="hljs-built_in">unset</span> IFS
+</div></code></pre>
+<h2 id="5%E7%94%9F%E6%88%90%E3%81%97%E3%81%9F%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%82%92%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E3%81%AB%E5%A4%89%E5%8C%96%E3%81%95%E3%81%9B%E3%82%8B">5.生成したリクエストをランダムに変化させる</h2>
+<pre class="hljs"><code><div>root@ubuntu:~$ <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> {0..89}; <span class="hljs-keyword">do</span> <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> testcase.*; <span class="hljs-keyword">do</span> zzuf -r 0.01 -s <span class="hljs-variable">$i</span> &lt; <span class="hljs-string">"<span class="hljs-variable">$f</span>"</span> &gt; <span class="hljs-string">"<span class="hljs-variable">$i</span>-<span class="hljs-variable">$f</span>"</span>; <span class="hljs-keyword">done</span>; <span class="hljs-keyword">done</span>
+</div></code></pre>
+<h2 id="61%E3%81%A7%E6%A7%8B%E7%AF%89%E3%81%97%E3%81%9Fapache%E3%81%AB%E5%AF%BE%E3%81%97%E3%81%A6%E3%80%81%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E3%81%AB%E5%A4%89%E5%8C%96%E3%81%95%E3%81%9B%E3%81%9Fhttp%E3%83%AA%E3%82%AF%E3%82%A8%E3%82%B9%E3%83%88%E3%82%92ncat%E3%81%A7%E9%80%81%E4%BF%A1%E3%81%99%E3%82%8B%E3%80%82">6.[1.]で構築したApacheに対して、ランダムに変化させたHTTPリクエストをNcatで送信する。</h2>
+<pre class="hljs"><code><div>root@ubuntu:~$ <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> {0..89}; <span class="hljs-keyword">do</span> <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> {2000,2002,2003,2004,2006,2008,2009,2010,2013,2020,2021,2022,2034};<span class="hljs-keyword">do</span> nc -nv 192.168.204.80 <span class="hljs-variable">${p}</span> &lt; <span class="hljs-variable">${v}</span>-testcase<span class="hljs-variable">${v}</span>.req; <span class="hljs-keyword">done</span>; <span class="hljs-keyword">done</span>  &gt; `date +%Y%m%d%H%M%S.log` | less
+</div></code></pre>
+
+</body>
+</html>
